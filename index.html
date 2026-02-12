@@ -14,34 +14,120 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  text-align: center;
-  color: white;
+  overflow: hidden;
 }
 
-.box {
-  background: rgba(255, 255, 255, 0.2);
+
+.heart {
+  position: absolute;
+  color: red;
+  font-size: 20px;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+.card {
+  background: rgba(255,255,255,0.3);
   padding: 30px;
   border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
   backdrop-filter: blur(10px);
 }
 
 h1 {
-  font-size: 28px;
+  color: white;
 }
 
 p {
+  color: white;
   font-size: 18px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.yes {
+  background: #ff4b5c;
+  color: white;
+}
+
+.no {
+  background: gray;
+  color: white;
+  position: relative;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="card" id="page1">
   <h1>Happy Valentine’s Day Maa ❤️</h1>
-  <p>You are my first love, my forever hero, my everything 💖</p>
-  <p>I love you so much Maa 🌸</p>
+  <p>You are my first love, my forever hero 💖</p>
+  <p>I love you so much Maa ✨</p>
+  <button onclick="nextPage()">Next 💕</button>
 </div>
+
+<div class="card" id="page2" style="display:none;">
+  <h1>Quiz Time 😍</h1>
+  <p>Who loves Maa the most?</p>
+  <button class="yes" onclick="alert('Correct! 😘 That is YOU!')">Me 💖</button>
+  <button class="no" onclick="moveNo(this)">Someone else 😜</button>
+  <br>
+  <button onclick="nextPage()">Next 💕</button>
+</div>
+
+<div class="card" id="page3" style="display:none;">
+  <h1>Maa, Will You Always Stay With Me? 🥺</h1>
+  <button class="yes" onclick="alert('Love you Maaaa ❤️')">YES 💕</button>
+  <button class="no" onclick="moveNo(this)">NO 😜</button>
+</div>
+
+<script>
+function nextPage() {
+  const pages = document.querySelectorAll('.card');
+  for (let i = 0; i < pages.length; i++) {
+    if (pages[i].style.display !== "none") {
+      pages[i].style.display = "none";
+      if (pages[i+1]) pages[i+1].style.display = "block";
+      break;
+    }
+  }
+}
+
+
+function moveNo(button) {
+  button.style.position = "absolute";
+  button.style.top = Math.random() * window.innerHeight + "px";
+  button.style.left = Math.random() * window.innerWidth + "px";
+}
+
+
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}, 500);
+</script>
 
 </body>
 </html>
+
